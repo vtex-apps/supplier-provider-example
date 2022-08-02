@@ -2,7 +2,7 @@ import type { ClientsConfig, ServiceContext, RecorderState } from '@vtex/api'
 import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
-import { getSuppliers } from './middlewares/supplierProvider'
+import { provideSuppliers } from './API/suppliers'
 
 const TIMEOUT_MS = 800
 
@@ -43,10 +43,9 @@ declare global {
 export default new Service({
   clients,
   routes: {
-    // `status` is the route ID from service.json. It maps to an array of middlewares (or a single handler).
     // `getSuppliers` is the route that must provide a supplier for the supplierBuilder
     getSuppliers: method({
-      POST: [getSuppliers],
+      POST: [provideSuppliers],
     }),
   },
 })
