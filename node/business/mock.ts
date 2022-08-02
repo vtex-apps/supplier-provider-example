@@ -1,6 +1,6 @@
 import type { ProtocolRequest } from '../typings/protocolRequest'
 
-export const generateSupplier = async ({
+export const generateMockSupplier = async ({
   orderId,
   transactionId,
 }: ProtocolRequest) => {

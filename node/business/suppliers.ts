@@ -1,5 +1,5 @@
 import type { ProtocolRequest } from '../typings/protocolRequest'
-import { generateSupplier } from './mock'
+import { generateMockSupplier } from './mock'
 import type { Supplier } from '../typings/supplier'
 
 export async function getSuppliers(payload: ProtocolRequest) {
@@ -9,8 +9,8 @@ export async function getSuppliers(payload: ProtocolRequest) {
    *
    */
   const providedSuppliers: Supplier[] = [
-    await generateSupplier(payload),
-    await generateSupplier(payload),
+    await generateMockSupplier(payload),
+    await generateMockSupplier(payload),
   ]
 
   return providedSuppliers
