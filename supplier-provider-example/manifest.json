@@ -1,0 +1,27 @@
+{
+  "name": "supplier-provider-example",
+  "vendor": "vtex",
+  "version": "0.0.0",
+  "title": "Supplier Provider",
+  "description": "Reference app for Supplier Provider Protocol usage",
+  "mustUpdateAt": "2022-08-01",
+  "categories": [],
+  "dependencies": {},
+  "builders": {
+    "supplierProvider": "0.x",
+    "node": "6.x"
+  },
+  "scripts": {
+    "prereleasy": "bash lint.sh"
+  },
+  "credentialType": "absolute",
+  "policies": [
+    {
+      "name": "colossus-fire-event"
+    },
+    {
+      "name": "colossus-write-logs"
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
+}
