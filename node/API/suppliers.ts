@@ -1,11 +1,11 @@
 import { json } from 'co-body'
 
-import { getSuppliers } from '../business/supplierProvider'
+import { getSuppliers } from '../business/suppliers'
 
 export const provideSuppliers = async ({ req, response }: Context) => {
   const payload = await json(req)
 
-  const sups = await getSuppliers(payload)
+  const sups = getSuppliers(payload)
 
   if (sups.length > 0) {
     response.body = sups

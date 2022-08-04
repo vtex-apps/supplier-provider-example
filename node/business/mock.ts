@@ -1,6 +1,6 @@
 import type { ProtocolRequest } from '../typings/protocolRequest'
 
-export const generateMockSupplier = async ({
+export const generateMockSupplier = ({
   orderId,
   transactionId,
 }: ProtocolRequest) => {
@@ -11,9 +11,6 @@ export const generateMockSupplier = async ({
     Math.round(Math.min(Math.random() * 10, max))
 
   const index = randomIndex(names.length - 1)
-
-  // fake latency
-  await new Promise((r) => setTimeout(r, 300))
 
   return {
     id: names[index],
