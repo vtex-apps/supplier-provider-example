@@ -1,8 +1,8 @@
-import type { ProtocolRequest } from '../typings/protocolRequest'
-import { generateMockSupplier } from './mock'
-import type { Supplier } from '../typings/supplier'
+import type { ProtocolRequest, Supplier } from '@vtex/supplier-provider-sdk'
 
-export function getSuppliers(payload: ProtocolRequest) {
+import { generateMockSupplier } from './mock'
+
+export function getSuppliers(payload: ProtocolRequest): Supplier[] {
   /*
    *
    * This is the function you must implement as you will fetch yours suppliers

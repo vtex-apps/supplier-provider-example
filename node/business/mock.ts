@@ -1,4 +1,4 @@
-import type { ProtocolRequest } from '../typings/protocolRequest'
+import type { ProtocolRequest } from '@vtex/supplier-provider-sdk'
 
 export const generateMockSupplier = ({
   orderId,
