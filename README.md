@@ -64,14 +64,11 @@ In this function you must implement the way you will return a supplier(s).
 The `Supplier Provider Builder` will automatically set the route `/suppliers` , this route is the one that will be called by the `Recipients Builder` . By default this build is already declared in this example. 
 ``` json
 {
-	...
-
 	"builders": 
 	{
 		"supplierProvider": "0.x",
 		"node": "6.x"
 	}
-	...
 }
 ```
 

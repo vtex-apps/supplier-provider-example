@@ -1,5 +1,5 @@
 {
-  "name": "service-example",
+  "name": "supplier-provider-example",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -21,14 +21,20 @@
     ]
   },
   "devDependencies": {
+    "@apollo/react-testing": "3",
     "@types/node": "^12.12.21",
     "@vtex/danger": "^0.2.7",
     "@vtex/prettier-config": "^1.0.0",
+    "@vtex/test-tools": "^3.4.3",
     "eslint": "^7.16.0",
     "eslint-config-vtex": "^12.9.3",
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
+    "react-intl": "3",
     "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@vtex/supplier-provider-sdk": "^0.0.1"
   }
 }

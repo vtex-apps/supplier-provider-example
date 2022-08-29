@@ -1,9 +1,10 @@
+import type { ProtocolRequest } from '@vtex/supplier-provider-sdk'
 import { json } from 'co-body'
 
 import { getSuppliers } from '../business/suppliers'
 
-export const provideSuppliers = async ({ req, response }: Context) => {
-  const payload = await json(req)
+export async function provideSuppliers({ req, response }: Context) {
+  const payload: ProtocolRequest = await json(req)
 
   const sups = getSuppliers(payload)
 

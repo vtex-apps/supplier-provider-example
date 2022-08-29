@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@vtex/supplier-provider-sdk": "^0.0.1",
     "co-body": "^6.0.0",
     "ramda": "^0.25.0"
   },
@@ -11,8 +12,7 @@
     "@vtex/api": "6.45.12",
     "@vtex/test-tools": "^3.4.3",
     "@vtex/tsconfig": "^0.5.6",
-    "typescript": "3.9.7",
-    "vtex.service-example": "https://vini--ottermarketplace.myvtex.com/_v/private/typings/linked/v1/vtex.service-example@0.2.0+build1658595340/public/_types/react"
+    "typescript": "3.9.7"
   },
   "scripts": {
     "lint": "tsc --noEmit --pretty"
