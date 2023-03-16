@@ -2,7 +2,10 @@ import type { ClientsConfig, ServiceContext, RecorderState } from '@vtex/api'
 import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
-import { provideSuppliers } from './API/suppliers'
+import {
+  provideSuppliers,
+  provideSuppliersUsingMiniCart,
+} from './API/suppliers'
 
 const TIMEOUT_MS = 800
 
@@ -47,5 +50,15 @@ export default new Service({
     getSuppliers: method({
       POST: [provideSuppliers],
     }),
+    healthCheck: method({
+      POST: [healthCheck],
+    }),
+    getSuppliersByMiniCart: method({
+      POST: [provideSuppliersUsingMiniCart],
+    }),
   },
 })
+function healthCheck({ response }: Context) {
+  response.body = 'OK'
+  response.status = 200
+}

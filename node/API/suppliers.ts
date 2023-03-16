@@ -1,8 +1,8 @@
 import { json } from 'co-body'
 
-import { getSuppliers } from '../business/suppliers'
+import { getSuppliers, getSuppliersByMiniCart } from '../business/suppliers'
 
-export const provideSuppliers = async ({ req, response }: Context) => {
+export async function provideSuppliers({ req, response }: Context) {
   const payload = await json(req)
 
   const sups = getSuppliers(payload)
@@ -14,4 +14,15 @@ export const provideSuppliers = async ({ req, response }: Context) => {
     response.body = 'Suppliers not found'
     response.status = 404
   }
+}
+
+export async function provideSuppliersUsingMiniCart({
+  req,
+  response,
+}: Context) {
+  const payload = await json(req)
+  const suppliers = getSuppliersByMiniCart(payload)
+
+  response.status = 200
+  response.body = suppliers
 }
