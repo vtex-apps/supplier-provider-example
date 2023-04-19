@@ -13,12 +13,41 @@
 
 
 ### The payload format
-Currently the data that the supplier provider will receive is composed by the transaction id and the order id
+Currently the data that the supplier provider will receive is composed by the transaction id, order id and MiniCart as payload
 ```ts 
-	{
-		"transactionId" : string, 
-		"orderId": string
-	}
+{
+  miniCart: MiniCart
+  transactionId?: string
+  orderId?: string
+  currency?: string = 'BRL'
+  operationValue?: number
+  chargeProcessingFee?: boolean = null
+  chargebackLiable?: boolean = null
+  proportionalRefund?: boolean = false
+}
+```
+Where MiniCart is 
+```ts
+{
+  items?: Items[]
+  sellers?: Array<{
+    id: string
+    name: string
+    document: string
+    documentType: string
+  }>
+  freight?: number
+  orderUrl?: string
+  tax?: number
+  shippingdate?: Date
+  shippingestimated?: string
+  isGiftRegistry?: bool
+  giftRegistryDescription?: string
+  giftRegistryId?: strinsg
+  isPickupStore?: boolean
+  isCallCenter?: bool
+}
+
 ```
 ### The response format 
 We expect that the response of the supplier provider send a object that implements the follow interface
@@ -31,6 +60,44 @@ We expect that the response of the supplier provider send a object that implemen
 	  role: string
 	  amount: number
 	}
+```
+Where Item is 
+```ts 
+ {
+  id: string
+  name: string
+  value: number
+  quantity: number
+  priceTags?: [
+    {
+      name: string
+      value: number
+      isPercentual: bool
+    }
+  ]
+  components?: Item[]
+  comissions?: number
+  freightCommission?: number
+  sellerChain?: string[]
+  shippingDiscout?: number
+  discount?: number
+  refId?: string
+  productId?: string
+  sellingPrice?: number
+  sellerId?: string | null
+  dockId?: string
+  categoryId?: string
+  categoryName?: string
+  deliveryChannel?: string
+  deliveryType?: string
+  deliverySlaInMinutes?: Long
+  deliveryWindow?: {
+    startDate: Date
+    endDate: Date
+  }
+  tax?: number
+  freight?: number
+}
 ```
 
 # Implementing a supplier provider
@@ -61,7 +128,7 @@ export function getSuppliers(payload: ProtocolRequest) : Suppliers[] {
 In this function you must implement the way you will return a supplier(s).
 
 #### About the routes
-The `Supplier Provider Builder` will automatically set the route `/suppliers` , this route is the one that will be called by the `Recipients Builder` . By default this build is already declared in this example. 
+The `Supplier Provider Builder` will automatically set the route `/minicart-suppliers` , this route is the one that will be called by the `Recipients Builder` . By default this build is already declared in this example. 
 ``` json
 {
 	...
