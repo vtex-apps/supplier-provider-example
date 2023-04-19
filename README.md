@@ -47,19 +47,6 @@ Where MiniCart is
   isPickupStore?: boolean
   isCallCenter?: bool
 }
-
-```
-### The response format 
-We expect that the response of the supplier provider send a object that implements the follow interface
-```Typescript
-	{
-	  id: string
-	  name: string
-	  documentType: string
-	  document: string
-	  role: string
-	  amount: number
-	}
 ```
 Where Item is 
 ```ts 
@@ -98,6 +85,20 @@ Where Item is
   tax?: number
   freight?: number
 }
+```
+
+
+### The response format 
+We expect that the response of the supplier provider send a object that implements the follow interface
+```Typescript
+	{
+	  id: string
+	  name: string
+	  documentType: string
+	  document: string
+	  role: string
+	  amount: number
+	}
 ```
 
 # Implementing a supplier provider
