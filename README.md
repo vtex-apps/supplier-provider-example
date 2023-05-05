@@ -11,6 +11,23 @@
 | Gateway            | The application that process the payment                                                                                                                                                      |
 | Suppliers Providers Builder | A builder present in the builder-hub, declared in the manifest.json. <br> automaticallyThis builder automatically sets the route that will be called by the recipients-builder and the necessaries policies of the supplier provider | 
 
+# Supplier Protocol 
+
+## How It Works
+
+An brief overview of the Supplier Protocol is this image 
+![Supplier Protocol Overview](docs///SupplierProtocol.png)
+
+In the moment where the split will occurr the `RecipientsBuilder` app will be called. This app will make a request to all apps that use the `SupplierProviderBuilder`, after that it will respond the merged recipients to the `Payment Gateway`. 
+The route that will be called by the `RecipientsBuilder` app is ``/minicart-supplier`
+
+### Pre-requirements
+There are some mandatory requirements to use the Supplier Protocol
+- The recipient builder app **must** be installed in the account
+  - You can check if is installed by `vtex ls` command 
+  - If it's not you can install using `vtex install recipients-builder`
+- You need to configure the account to use split. So you must use an connecor that allows split and a configured afiliation. 
+
 
 ### The payload format
 Currently the data that the supplier provider will receive is composed by the transaction id, order id and MiniCart as payload
@@ -89,46 +106,44 @@ Where Item is
 
 
 ### The response format 
-We expect that the response of the supplier provider send a object that implements the follow interface
-```Typescript
-	{
-	  id: string
-	  name: string
-	  documentType: string
-	  document: string
-	  role: string
-	  amount: number
-	}
-```
+The expected response type is a list of suppliers
+  ```Typescript
+    [{
+      id: string
+      name: string
+      documentType: string
+      document: string
+      role: string
+      amount: number
+    }]
+  ```
+
 
 # Implementing a supplier provider
-To implement a supplier provider you just need to clone this repository and implement the body of ``getSuppliers``  function, found in `{root}/node/business/suppliers.ts` . By default, the current body returns a list of mock suppliers. 
+
+1. Clone this repo
+2. Verify the configs and requirements
+3. Start hacking!
+
+In this example, you can just write you implementation in this controller:
+
 ```ts
-export function getSuppliers(payload: ProtocolRequest) : Suppliers[] {
-	/*
-	
-	*
-	
-	* This is the function you must implement as you will fetch yours suppliers
-	
-	*
-	
-	*/
-	const providedSuppliers: Supplier[] = [
-	
-		generateMockSupplier(payload),
-	
-		generateMockSupplier(payload),
-	
-	]
-	
-	return providedSuppliers
+export async function provideSuppliersUsingMiniCart({
+  req,
+  response,
+}: Context) {
+  const payload = await json(req)
+  const suppliers = getSuppliersByMiniCart(payload)
+
+  response.status = 200
+  response.body = suppliers
 }
 ```
 
-In this function you must implement the way you will return a supplier(s).
 
-#### About the routes
+
+#### Verify Builder
+
 The `Supplier Provider Builder` will automatically set the route `/minicart-suppliers` , this route is the one that will be called by the `Recipients Builder` . By default this build is already declared in this example. 
 ``` json
 {
@@ -142,9 +157,98 @@ The `Supplier Provider Builder` will automatically set the route `/minicart-supp
 	...
 }
 ```
+If the `supplierProvider` build it's not declared the app will not be used
 
-## Running
-To run the application and link it to your account you can just make: 
+## Testing
 
-	vtex link 
+You can test your Supplier Provider by link it (`vtex link`) and mock the Gateway request, by making a resquest to this route:
+```
+POST https://app.io.vtex.com/vtex.recipients-builder/v1/{account}/{workspace}/minicart-suppliers
+```
+The payload that you need to send implements the same interface that you will be recieving. 
 
+Here's an example of payload
+
+``` json
+
+{
+    "transactionId": "8C8D8541553211EEE2D08E3B3B3F9",
+    "orderId": "1234567",
+    "currency": "BRL",
+    "operationValue": 38639,
+    "chargeProcessingFee": "false",
+    "chargebackLiable": "false",
+    "proportionalRefund": "false",
+    "miniCart": {
+        "items": [
+            {
+                "id": "76671",
+                "name": "Mocked Item",
+                "value": 0,
+                "quantity": 1,
+                "priceTags": [],
+                "components": null,
+                "commission": 0,
+                "freightCommission": 0,
+                "sellerChain": null,
+                "shippingDiscount": 0,
+                "discount": 0,
+                "refId": null,
+                "productId": null,
+                "sellingPrice": 0,
+                "sellerId": null,
+                "dockId": null,
+                "categoryId": null,
+                "categoryName": null,
+                "catergoryName": null,
+                "deliveryChannel": null,
+                "deliveryType": null,
+                "deliverySlaInMinutes": null,
+                "deliveryWindow": null,
+                "tax": 0,
+                "freight": 0
+            }
+        ],
+        "freight": 1739,
+        "orderUrl": "http://www.someaccount.com/admin/checkout/#/orders?q=10000",
+        "tax": 0,
+        "shippingdate": null,
+        "shippingestimated": "2bd",
+        "isGiftRegistry": null,
+        "giftRegistryDescription": null,
+        "giftRegistryId": null,
+        "isPickupStore": null,
+        "isCallCenter": null
+    }
+}
+```
+If everything works well the response it will be a list like this:
+```json
+[
+    {
+        "id": "mock",
+        "name": "mocked",
+        "amount": 38639,
+        "document": "1111",
+        "documentType": "CNPJ",
+        "role": "influencer",
+        "commissionAmount": 100,
+        "chargebackLiable": false,
+        "chargeProcesssingFee": false
+    },
+    {
+        "id": "coinshop",
+        "name": "coinshop",
+        "documentType": "CNPJ",
+        "document": "05314972000174",
+        "role": "seller",
+        "amount": 0,
+        "commissionAmount": 0,
+        "chargeProcessingFee": "false",
+        "chargebackLiable": "false"
+    }
+]
+```
+#### Attention: The some of recipients amount must be less or equal to the transaction value
+
+After this you can try to finish a transaction using a account that allows supplier protocol. If everything is ok, the recipients of the transaction it will be the provided by the supplier provider apps installed in the account
