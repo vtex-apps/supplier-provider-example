@@ -249,6 +249,6 @@ If everything works well the response it will be a list like this:
     }
 ]
 ```
-#### Attention: The some of recipients amount must be less or equal to the transaction value
+#### Attention: The sum of recipients amount must be less or equal to the transaction value
 
 After this you can try to finish a transaction using a account that allows supplier protocol. If everything is ok, the recipients of the transaction it will be the provided by the supplier provider apps installed in the account
