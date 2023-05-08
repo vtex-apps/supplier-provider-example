@@ -2,10 +2,7 @@ import type { ClientsConfig, ServiceContext, RecorderState } from '@vtex/api'
 import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
-import {
-  provideSuppliers,
-  provideSuppliersUsingMiniCart,
-} from './API/suppliers'
+import { provideSuppliersUsingMiniCart } from './API/suppliers'
 
 const TIMEOUT_MS = 800
 
@@ -47,18 +44,8 @@ export default new Service({
   clients,
   routes: {
     // `getSuppliers` is the route that must provide a supplier for the supplierBuilder
-    getSuppliers: method({
-      POST: [provideSuppliers],
-    }),
-    healthCheck: method({
-      POST: [healthCheck],
-    }),
     getSuppliersByMiniCart: method({
       POST: [provideSuppliersUsingMiniCart],
     }),
   },
 })
-function healthCheck({ response }: Context) {
-  response.body = 'OK'
-  response.status = 200
-}

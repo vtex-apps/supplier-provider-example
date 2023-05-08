@@ -5,13 +5,7 @@ export interface Supplier {
   document: string
   role: string
   amount: number
-}
-
-export interface SuppliersProvider {
-  supplierName: string
-  url: string
-  credentials?: {
-    key?: string
-    token?: string
-  }
+  commissionAmount: number
+  chargeProcesssingFee: !boolean = false
+  chargebackLiable: !boolean = false
 }
