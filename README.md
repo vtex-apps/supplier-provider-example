@@ -9,7 +9,7 @@
 | Supplier Provider  | An API that provides the supplier that will be called by the `recipients builder`                                                                     |
 | [Recipients builder](https://github.com/vtex/recipients-builder) | The IO App that will identify the supplier provider linked in the account and will request all the providers, then send the result to the ``gateway`` |
 | Gateway            | The application that process the payment                                                                                                                                                      |
-| Suppliers Providers Builder | A builder present in the builder-hub, declared in the manifest.json. <br> automaticallyThis builder automatically sets the route that will be called by the recipients-builder and the necessaries policies of the supplier provider | 
+| Suppliers Providers Builder | A builder present in the builder-hub, declared in the manifest.json <br> This builder automatically sets the route that will be called by the recipients-builder and the necessaries policies of the supplier provider | 
 
 # Supplier Protocol 
 
@@ -30,7 +30,7 @@ There are some mandatory requirements to use the Supplier Protocol
 
 
 ### The payload format
-Currently the data that the supplier provider will receive is composed by the transaction id, order id and MiniCart as payload
+Currently the data that the supplier provider will receive has this payload:
 ```ts 
 {
   miniCart: MiniCart
