@@ -6,7 +6,9 @@
   "description": "Reference app for Supplier Provider Protocol usage",
   "mustUpdateAt": "2022-08-01",
   "categories": [],
-  "dependencies": {},
+  "dependencies": {
+    "recipients-builder": "1.x"
+  },
   "builders": {
     "supplierProvider": "0.x",
     "node": "6.x"
