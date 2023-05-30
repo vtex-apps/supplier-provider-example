@@ -19,14 +19,14 @@ An brief overview of the Supplier Protocol is this image
 ![Supplier Protocol Overview](docs///SupplierProtocol.png)
 
 In the moment where the split will occurr the `RecipientsBuilder` app will be called. This app will make a request to all apps that use the `SupplierProviderBuilder`, after that it will respond the merged recipients to the `Payment Gateway`. 
-The route that will be called by the `RecipientsBuilder` app is ``/minicart-supplier`
+The route that will be called by the `RecipientsBuilder` app is `/minicart-supplier`
 
 ### Pre-requirements
 There are some mandatory requirements to use the Supplier Protocol
 - The recipient builder app **must** be installed in the account
   - You can check if is installed by `vtex ls` command 
   - If it's not you can install using `vtex install recipients-builder`
-- You need to configure the account to use split. So you must use an connecor that allows split and a configured afiliation. 
+- You need to configure the account to use split. So you must use an connector that allows split and a configured afiliation. 
 
 
 ### The payload format
