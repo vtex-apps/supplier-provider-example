@@ -7,7 +7,7 @@
   "mustUpdateAt": "2022-08-01",
   "categories": [],
   "dependencies": {
-    "recipients-builder": "1.x"
+    "vtex.recipients-builder": "1.x"
   },
   "builders": {
     "supplierProvider": "0.x",
